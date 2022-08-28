@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Тестовое задание</title>
+    </head>
+    <body>
+        <template id="clock-template">
+            <div class="clock clock__margin">
+                <div class="clock__arrow">
+                    <div class="clock__arrow-container">
+                        <div class="clock__hours"></div>
+                    </div>
+                    <div class="clock__arrow-container">
+                        <div class="clock__minutes"></div>
+                    </div>
+                    <div class="clock__arrow-container">
+                        <div class="clock__seconds"></div>
+                    </div>
+                </div>
+                <div class="clock__number">
+                    <time class="time"></time>
+                </div>
+                <div class="clock__timezones">
+                    <div class="select-wrapper">
+                        <select class="timezones"></select>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <div class="wrapper">
+            <h1 class="title">Время</h1>
+            <div class="clocks">
+            </div>
+        </div>
+    </body>
+</html>

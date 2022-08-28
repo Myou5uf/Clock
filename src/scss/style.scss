@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap");
+
+$main-color: #0a8efa;
+$second-color: #fff;
+$size-clock-cirlce: 8px;
+
+$height-arrow-seconds: 90px;
+$width-arrow-seconds: 2px;
+
+$height-arrow-minutes: 80px;
+$width-arrow-minutes: 4px;
+
+$height-arrow-hours: calc($height-arrow-minutes / 2);
+$width-arrow-hours: 6px;
+
+@mixin arrow-wrapper($width, $height) {
+    position: relative;
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+body {
+    min-height: 100vh;
+    width: 100%;
+    background: #091921;
+    font-family: "Roboto", sans-serif;
+    color: $second-color;
+}
+
+.wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+.title {
+    margin: 20px 0 40px;
+    text-align: center;
+    color: $main-color;
+    text-transform: uppercase;
+}
+
+.clocks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.clock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+    &__margin {
+        margin-bottom: 50px;
+    }
+    &__arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 200px;
+        height: 200px;
+        margin-bottom: 25px;
+        background: url("../img/clock.png") center / cover;
+        border: 2px solid #091921;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px $main-color, 0 0 20px $main-color;
+        position: relative;
+        &:before {
+            content: "";
+            position: absolute;
+            width: $size-clock-cirlce;
+            height: $size-clock-cirlce;
+            border-radius: 50%;
+            background: #fff;
+            z-index: 100;
+        }
+    }
+    &__arrow-container {
+        position: absolute;
+    }
+    &__hours {
+        @include arrow-wrapper(160px, 160px);
+        &:before {
+            content: "";
+            position: absolute;
+            height: $height-arrow-hours;
+            width: $width-arrow-hours;
+            bottom: calc(50% - ($width-arrow-hours / 2));
+            left: calc(50% - ($width-arrow-hours / 2));
+            background: $main-color;
+            z-index: 10;
+            border-radius: 6px 6px 0 0;
+        }
+    }
+    &__minutes {
+        @include arrow-wrapper(190px, 190px);
+        &:before {
+            content: "";
+            position: absolute;
+            width: $width-arrow-minutes;
+            height: $height-arrow-minutes;
+            bottom: calc(50% - ($width-arrow-minutes / 2));
+            left: calc(50% - ($width-arrow-minutes / 2));
+            background: #fff;
+            z-index: 11;
+            border-radius: 6px 6px 0 0;
+        }
+    }
+    &__seconds {
+        @include arrow-wrapper(230px, 230px);
+        &:before {
+            content: "";
+            position: absolute;
+            width: $width-arrow-seconds;
+            height: $height-arrow-seconds;
+            bottom: calc(50% - $height-arrow-hours / 2);
+            left: calc(50% - ($width-arrow-seconds / 2));
+            background: #fff;
+            z-index: 11;
+            border-radius: 6px 6px 0 0;
+        }
+    }
+    &__number {
+        margin-bottom: 15px;
+    }
+}
+
+.time {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: $main-color;
+    font-weight: 700;
+}
+
+.select-wrapper {
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        display: block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 12px 6px 0 6px;
+        border-color: $main-color transparent transparent transparent;
+        pointer-events: none;
+    }
+}
+.timezones {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    border: 1px solid $main-color;
+    border-radius: 4px;
+    padding: 10px 35px 10px 15px;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 1px $main-color, 0 0 10px $main-color;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+}
