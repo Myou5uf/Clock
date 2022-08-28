@@ -25,6 +25,12 @@ const hours = this._date.getHours() * 30;       // 1 hour = 30 deg
 const minutes = this._date.getMinutes() * 6;    // 1 min = 6 deg  
 const seconds = this._date.getSeconds() * 6;    // 1 sec = 6 deg  
 ```
+Задаем цифровым часам единый формат вида **ЧЧ:ММ:СС**
+```js
+let fHours = this._date.getHours() < 10 ? `0${this._date.getHours()}` : this._date.getHours();
+let fMinutes = this._date.getMinutes() < 10 ? `0${this._date.getMinutes()}` : this._date.getMinutes();
+let fSeconds = this._date.getSeconds() < 10 ? `0${this._date.getSeconds()}` : this._date.getSeconds();
+```
 
 Далее добавляем в разметку:
 
