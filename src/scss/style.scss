@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap");
 
+// REVIEW: рекомендую переменные и mixin'ы вынести в отдельные файлы, хотя в таком маленьком проекте это необязательно
 $main-color: #0a8efa;
 $second-color: #fff;
 $size-clock-cirlce: 8px;
@@ -20,6 +21,7 @@ $width-arrow-hours: 6px;
     border-radius: 50%;
 }
 
+// REVIEW: рекомендую использовать normalize.css или reset.css, но это в больших проектах
 * {
     margin: 0;
     padding: 0;
@@ -63,9 +65,12 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px 20px;
+    // REVIEW: селекторы рекомендуется отделять пустыми строками, так:
+
     &__margin {
         margin-bottom: 50px;
     }
+
     &__arrow {
         display: flex;
         justify-content: center;
@@ -74,6 +79,7 @@ body {
         width: 200px;
         height: 200px;
         margin-bottom: 25px;
+        // REVIEW: было бы круто если бы циферблат был реализован средствами HTML + CSS
         background: url("../img/clock.png") center / cover;
         border: 2px solid #091921;
         border-radius: 50%;
@@ -164,6 +170,7 @@ body {
     }
 }
 .timezones {
+    // REVIEW: обычно настраиваются автопрефиксы через babel
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;

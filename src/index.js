@@ -3,8 +3,19 @@ import "./scss/style.scss";
 const requestURL = "./timezones.json";
 const clocksWrapper = document.querySelector(".clocks");
 
+// REVIEW: рекомендую вынести в отдельный файл класс и импортировать его, обычно
+// в index.js описывается логика, но не определения функций, классов или переменных
+
 class Time {
-    _date; // Текущая дата на компьютере
+
+    // REVIEW: рекомендую использовать jsdoc комментарии для свойств, вот такие:
+
+    /**
+     * Текущая дата на компьютере
+     * @type {Date}
+     * @private
+     */
+    _date;
     _localTimeZone; // Локальный часовой пояс, установленный на ПК
     _selectedTimeZone; // Выбранный часовой пояс из выпадающего списка
     _timeZoneDifference; // Разница между локальным и выбранным часовым поясом
@@ -22,7 +33,9 @@ class Time {
     static #instances = 0; // Кол-во экземпляров класса
 
     constructor(wrapper, timeZonesURL) {
+        // REVIEW: считать после фактического создания, иначе счётчик будет бесконечно расти
         Time.#instances++;
+        // REVIEW: тут добавить +1, если код выше перенесен
         if (Time.#instances > Time.#maxInstances) {
             throw new Error(`Вы создали максимальное количество экземпляров: ${Time.#maxInstances}`);
         }
@@ -63,6 +76,7 @@ class Time {
             })
             .catch((error) => {
                 console.log("Данные получены с ошибкой: " + error.message);
+                // REVIEW: здесь стоит вернуть пустой массив, иначе далее будет ошибка
             });
     }
 
@@ -82,10 +96,12 @@ class Time {
 
     // Добавить часы на страницу
     appendWidget(wrapper, url) {
+        // REVIEW: timeZones будет равен undefined в случае ошибки, как следствие далее тоже будет ошибка
         this.getTimezonesFromDB(url).then((timeZones) => {
             // заполнение select полученными данными (timeZones)
             timeZones.forEach((timeZone, index) => {
                 if (index === 0) {
+                    // REVIEW: здесь можно было изящней сделать в одну строку, если написать так: ${index === 0 ? 'selected' : ''}
                     this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}" selected>${timeZone.name}</option>`;
                 } else {
                     this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}">${timeZone.name}</option>`;
@@ -94,6 +110,7 @@ class Time {
 
             wrapper.append(this._clock);
             this._selectedTimeZone = this._timeZonesSelect.value;
+            // REVIEW: можно не передавать аргументы, т.к. к ним есть доступ через this
             this.startClock(this._hoursArrow, this._minutesArrow, this._secondsArrow, this._timeElement, this._selectedTimeZone);
         });
     }
@@ -103,17 +120,24 @@ class Time {
         clearInterval(this._interval);
 
         this._localTimeZone = this._date.getTimezoneOffset() / 60; // локальный часовой пояс в часах
+        // REVIEW: разве это не тоже самое, что и "this._localTimeZone + selectedTimeZone"?
+        // Нужно только переменные привести к нужным типам через parseInt 
+        // REVIEW: в целом переменную "_timeZoneDifference" нет смысла хранить в стейте объекта, 
+        // можно просто создать локальную переменную она через замыкание будет доступна внутри setInterval
         this._timeZoneDifference = -(-this._localTimeZone - selectedTimeZone); // разница между локальным и выбранным часовым поясом
 
         this._interval = setInterval(() => {
             // Создаем новое время со смещением _timeZoneDifference
             this._date = new Date(this.getTime(this._timeZoneDifference));
+            // REVIEW: стоит переименовать переменные, чтобы было понятно, что тут градусы хранятся
+            // например так: hourArrowAngle 
 
             // Высчитываем градусы для соответствующих стрелок
             const hours = this._date.getHours() * 30; // 1 hour = 30 deg
             const minutes = this._date.getMinutes() * 6; // 1 min = 6 deg
             const seconds = this._date.getSeconds() * 6; // 1 sec = 6 deg
 
+            // REVIEW: соответственно тут можно поменять название на hours, ...
             // Добавляем 0, если часы или мин. или сек. меньше 0
             let fHours = this._date.getHours() < 10 ? `0${this._date.getHours()}` : this._date.getHours();
             let fMinutes = this._date.getMinutes() < 10 ? `0${this._date.getMinutes()}` : this._date.getMinutes();
@@ -128,6 +152,8 @@ class Time {
         }, 100);
     }
 }
+
+// REVIEW: было бы круто добавить фичу добавления новых часов и удаления старых
 
 const day1 = new Time(clocksWrapper, requestURL); // eslint-disable-line no-unused-vars
 const day2 = new Time(clocksWrapper, requestURL); // eslint-disable-line no-unused-vars

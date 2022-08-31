@@ -38,6 +38,7 @@ module.exports = {
     },
     resolve: {
         extensions: [".js", ".json", ".png"],
+        // REVIEW: это по факту не используется
         alias: {
             "@models": path.resolve(__dirname, "src/models"),
             "@": path.resolve(__dirname, "src"),
