@@ -1,20 +1,94 @@
 export default class Time {
-    _date; // Текущая дата на компьютере
-    _localTimeZone; // Локальный часовой пояс, установленный на ПК
-    _selectedTimeZone; // Выбранный часовой пояс из выпадающего списка
-    _timeZoneDifference; // Разница между локальным и выбранным часовым поясом
+    /**
+     * Текущая дата на компьютере
+     * @type {Date}
+     * @private
+     */
+    _date;
 
-    // Элементы страницы
-    _clock; //  Контейнер
-    _hoursArrow; //  Часовая стрелка
-    _minutesArrow; //  Минутная стрелка
-    _secondsArrow; //  Секундная стрелка
-    _timeElement; //  Цифровое часы
-    _timeZonesSelect; //  Выпадающий список с часовыми поясами
-    _interval; //  setInterval
+    /**
+     * Локальный часовой пояс, установленный на ПК
+     * @type {number}
+     * @private
+     */
+    _localTimeZone;
 
-    static #maxInstances = 24; // Максимальное кол-во экемпляров класса
-    static #instances = 0; // Кол-во экземпляров класса
+    /**
+     * Выбранный часовой пояс из выпадающего списка
+     * @type {number}
+     * @private
+     */
+    _selectedTimeZone;
+
+    /**
+     * Разница между локальным и выбранным часовым поясом
+     * @type {number}
+     * @private
+     */
+    _timeZoneDifference;
+
+    /**
+     * Контейнер
+     * @type {HTMLElement}
+     * @private
+     */
+    _clock;
+
+    /**
+     * Часовая стрелка
+     * @type {HTMLElement}
+     * @private
+     */
+    _hoursArrow;
+
+    /**
+     * Минутная стрелка
+     * @type {HTMLElement}
+     * @private
+     */
+    _minutesArrow;
+
+    /**
+     * Секундная стрелка
+     * @type {HTMLElement}
+     * @private
+     */
+    _secondsArrow;
+
+    /**
+     * Цифровое часы
+     * @type {HTMLElement}
+     * @private
+     */
+    _timeElement;
+
+    /**
+     * Выпадающий список с часовыми поясами
+     * @type {HTMLElement}
+     * @private
+     */
+    _timeZonesSelect;
+
+    /**
+     * setInterval
+     * @type {number}
+     * @private
+     */
+    _interval;
+
+    /**
+     * Максимальное кол-во экемпляров класса
+     * @type {number}
+     * @private
+     */
+    static #maxInstances = 24;
+
+    /**
+     * Кол-во экземпляров класса
+     * @type {number}
+     * @private
+     */
+    static #instances = 0;
 
     constructor(wrapper, timeZonesURL) {
         Time.#instances++;
