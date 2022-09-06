@@ -133,6 +133,7 @@ export default class Time {
             })
             .catch((error) => {
                 console.log("Данные получены с ошибкой: " + error.message);
+                return [];
             });
     }
 
