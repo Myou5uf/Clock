@@ -81,7 +81,7 @@ export default class Time {
      * @type {number}
      * @private
      */
-    static #maxInstances = 24;
+    static #maxInstances = 3;
 
     /**
      * Кол-во экземпляров класса
@@ -91,24 +91,25 @@ export default class Time {
     static #instances = 0;
 
     constructor(wrapper, timeZonesURL) {
-        Time.#instances++;
-        if (Time.#instances > Time.#maxInstances) {
+        if (Time.#instances >= Time.#maxInstances) {
             throw new Error(`Вы создали максимальное количество экземпляров: ${Time.#maxInstances}`);
         }
-        this._date = new Date();
+        else{
+            Time.#instances++;
 
-        this._clock = this.getCloneTemplate();
-        this._hoursArrow = this._clock.querySelector(".clock__hours");
-        this._minutesArrow = this._clock.querySelector(".clock__minutes");
-        this._secondsArrow = this._clock.querySelector(".clock__seconds");
-        this._timeElement = this._clock.querySelector(".time");
-        this._timeZonesSelect = this._clock.querySelector(".timezones");
+            this._date = new Date();
+            this._clock = this.getCloneTemplate();
+            this._hoursArrow = this._clock.querySelector(".clock__hours");
+            this._minutesArrow = this._clock.querySelector(".clock__minutes");
+            this._secondsArrow = this._clock.querySelector(".clock__seconds");
+            this._timeElement = this._clock.querySelector(".time");
+            this._timeZonesSelect = this._clock.querySelector(".timezones");
 
-        this.appendWidget(wrapper, timeZonesURL);
-
-        this._timeZonesSelect.addEventListener("change", (e) => {
-            this.changeTimeZone(e.target.value);
-        });
+            this.appendWidget(wrapper, timeZonesURL);
+            this._timeZonesSelect.addEventListener("change", (e) => {
+                this.changeTimeZone(e.target.value);
+            });
+        }
     }
 
     // Сменить часовой пояс
