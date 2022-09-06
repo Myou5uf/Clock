@@ -177,21 +177,21 @@ export default class Time {
             this._date = new Date(this.getTime(timeZoneDifference));
 
             // Высчитываем градусы для соответствующих стрелок
-            const hours = this._date.getHours() * 30; // 1 hour = 30 deg
-            const minutes = this._date.getMinutes() * 6; // 1 min = 6 deg
-            const seconds = this._date.getSeconds() * 6; // 1 sec = 6 deg
+            const hourArrowAngle = this._date.getHours() * 30; // 1 hour = 30 deg
+            const minuteArrowAngle = this._date.getMinutes() * 6; // 1 min = 6 deg
+            const secondArrowAngle = this._date.getSeconds() * 6; // 1 sec = 6 deg
 
             // Добавляем 0, если часы или мин. или сек. меньше 0
-            let fHours = this._date.getHours() < 10 ? `0${this._date.getHours()}` : this._date.getHours();
-            let fMinutes = this._date.getMinutes() < 10 ? `0${this._date.getMinutes()}` : this._date.getMinutes();
-            let fSeconds = this._date.getSeconds() < 10 ? `0${this._date.getSeconds()}` : this._date.getSeconds();
+            let hours = this._date.getHours() < 10 ? `0${this._date.getHours()}` : this._date.getHours();
+            let minutes = this._date.getMinutes() < 10 ? `0${this._date.getMinutes()}` : this._date.getMinutes();
+            let seconds = this._date.getSeconds() < 10 ? `0${this._date.getSeconds()}` : this._date.getSeconds();
 
             // Добавляем в разметку
-            this._timeElement.innerHTML = `${fHours}:${fMinutes}:${fSeconds}`;
+            this._timeElement.innerHTML = `${hours}:${minutes}:${seconds}`;
 
-            this._hoursArrow.style.transform = `rotateZ(${hours + minutes / 12}deg)`;
-            this._minutesArrow.style.transform = `rotateZ(${minutes}deg)`;
-            this._secondsArrow.style.transform = `rotateZ(${seconds}deg)`;
+            this._hoursArrow.style.transform = `rotateZ(${hourArrowAngle + minuteArrowAngle / 12}deg)`;
+            this._minutesArrow.style.transform = `rotateZ(${minuteArrowAngle}deg)`;
+            this._secondsArrow.style.transform = `rotateZ(${secondArrowAngle}deg)`;
         }, 100);
     }
 }
