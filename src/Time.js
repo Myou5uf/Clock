@@ -21,13 +21,6 @@ export default class Time {
     _selectedTimeZone;
 
     /**
-     * Разница между локальным и выбранным часовым поясом
-     * @type {number}
-     * @private
-     */
-    _timeZoneDifference;
-
-    /**
      * Контейнер
      * @type {HTMLElement}
      * @private
@@ -113,7 +106,7 @@ export default class Time {
 
     // Сменить часовой пояс
     changeTimeZone(selectedTimeZone) {
-        this._selectedTimeZone = selectedTimeZone;
+        this._selectedTimeZone = parseInt(selectedTimeZone);
         this.startClock();
     }
 
@@ -164,7 +157,7 @@ export default class Time {
                 });
 
                 wrapper.append(this._clock);
-                this._selectedTimeZone = this._timeZonesSelect.value;
+                this._selectedTimeZone = parseInt(this._timeZonesSelect.value);
                 this.startClock();
             } else {
                 alert("Произошла ошибка при получении данных о часовых поясах");
@@ -177,11 +170,11 @@ export default class Time {
         clearInterval(this._interval);
 
         this._localTimeZone = this._date.getTimezoneOffset() / 60; // локальный часовой пояс в часах
-        this._timeZoneDifference = -(-this._localTimeZone - this._selectedTimeZone); // разница между локальным и выбранным часовым поясом
-
+        const timeZoneDifference = this._localTimeZone + this._selectedTimeZone; // разница между локальным и выбранным часовым поясом
+        
         this._interval = setInterval(() => {
             // Создаем новое время со смещением _timeZoneDifference
-            this._date = new Date(this.getTime(this._timeZoneDifference));
+            this._date = new Date(this.getTime(timeZoneDifference));
 
             // Высчитываем градусы для соответствующих стрелок
             const hours = this._date.getHours() * 30; // 1 hour = 30 deg
