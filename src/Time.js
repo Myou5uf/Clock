@@ -93,8 +93,7 @@ export default class Time {
     constructor(wrapper, timeZonesURL) {
         if (Time.#instances >= Time.#maxInstances) {
             throw new Error(`Вы создали максимальное количество экземпляров: ${Time.#maxInstances}`);
-        }
-        else{
+        } else {
             Time.#instances++;
 
             this._date = new Date();
@@ -155,17 +154,21 @@ export default class Time {
     appendWidget(wrapper, url) {
         this.getTimezonesFromDB(url).then((timeZones) => {
             // заполнение select полученными данными (timeZones)
-            timeZones.forEach((timeZone, index) => {
-                if (index === 0) {
-                    this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}" selected>${timeZone.name}</option>`;
-                } else {
-                    this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}">${timeZone.name}</option>`;
-                }
-            });
+            if (timeZones.length) {
+                timeZones.forEach((timeZone, index) => {
+                    if (index === 0) {
+                        this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}" selected>${timeZone.name}</option>`;
+                    } else {
+                        this._timeZonesSelect.innerHTML += `<option class="timezones__item" value="${timeZone.timezone}">${timeZone.name}</option>`;
+                    }
+                });
 
-            wrapper.append(this._clock);
-            this._selectedTimeZone = this._timeZonesSelect.value;
-            this.startClock(this._hoursArrow, this._minutesArrow, this._secondsArrow, this._timeElement, this._selectedTimeZone);
+                wrapper.append(this._clock);
+                this._selectedTimeZone = this._timeZonesSelect.value;
+                this.startClock(this._hoursArrow, this._minutesArrow, this._secondsArrow, this._timeElement, this._selectedTimeZone);
+            } else {
+                alert("Произошла ошибка при получении данных о часовых поясах");
+            }
         });
     }
 
