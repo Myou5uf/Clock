@@ -114,7 +114,7 @@ export default class Time {
     // Сменить часовой пояс
     changeTimeZone(selectedTimeZone) {
         this._selectedTimeZone = selectedTimeZone;
-        this.startClock(this._hoursArrow, this._minutesArrow, this._secondsArrow, this._timeElement, selectedTimeZone);
+        this.startClock();
     }
 
     // Получить данные с файла
