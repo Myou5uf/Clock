@@ -165,7 +165,7 @@ export default class Time {
 
                 wrapper.append(this._clock);
                 this._selectedTimeZone = this._timeZonesSelect.value;
-                this.startClock(this._hoursArrow, this._minutesArrow, this._secondsArrow, this._timeElement, this._selectedTimeZone);
+                this.startClock();
             } else {
                 alert("Произошла ошибка при получении данных о часовых поясах");
             }
@@ -173,11 +173,11 @@ export default class Time {
     }
 
     // Запустить часы
-    startClock(hoursArrow, minutesArrow, secondsArrow, timeElement, selectedTimeZone) {
+    startClock() {
         clearInterval(this._interval);
 
         this._localTimeZone = this._date.getTimezoneOffset() / 60; // локальный часовой пояс в часах
-        this._timeZoneDifference = -(-this._localTimeZone - selectedTimeZone); // разница между локальным и выбранным часовым поясом
+        this._timeZoneDifference = -(-this._localTimeZone - this._selectedTimeZone); // разница между локальным и выбранным часовым поясом
 
         this._interval = setInterval(() => {
             // Создаем новое время со смещением _timeZoneDifference
@@ -194,11 +194,11 @@ export default class Time {
             let fSeconds = this._date.getSeconds() < 10 ? `0${this._date.getSeconds()}` : this._date.getSeconds();
 
             // Добавляем в разметку
-            timeElement.innerHTML = `${fHours}:${fMinutes}:${fSeconds}`;
+            this._timeElement.innerHTML = `${fHours}:${fMinutes}:${fSeconds}`;
 
-            hoursArrow.style.transform = `rotateZ(${hours + minutes / 12}deg)`;
-            minutesArrow.style.transform = `rotateZ(${minutes}deg)`;
-            secondsArrow.style.transform = `rotateZ(${seconds}deg)`;
+            this._hoursArrow.style.transform = `rotateZ(${hours + minutes / 12}deg)`;
+            this._minutesArrow.style.transform = `rotateZ(${minutes}deg)`;
+            this._secondsArrow.style.transform = `rotateZ(${seconds}deg)`;
         }, 100);
     }
 }
